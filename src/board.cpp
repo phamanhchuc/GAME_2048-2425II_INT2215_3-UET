@@ -18,15 +18,18 @@ Board::Board(Texture* tiles, TTF_Font* font, SDL_Renderer* renderer, Mix_Chunk* 
 void Board::spawnTile() {
     int empty[16][2];
     int count = 0;
+
+    // Quét toàn bộ bảng, tìm các ô trống
     for (int i = 0; i < 4; ++i)
         for (int j = 0; j < 4; ++j)
             if (grid[i][j] == 0)
                 empty[count][0] = i, empty[count++][1] = j;
 
+    // Nếu còn ô trống, chọn ngẫu nhiên một ô và gán giá trị 2 hoặc 4
     if (count > 0) {
         int r = rand() % count;
         int i = empty[r][0], j = empty[r][1];
-        grid[i][j] = (rand() % 10 == 0) ? 4 : 2;
+        grid[i][j] = (rand() % 10 == 0) ? 4 : 2; // 90% sinh 2, 10% sinh 4
     }
 }
 
@@ -52,6 +55,7 @@ void Board::render() {
         for (int j = 0; j < 4; ++j)
             drawTile(grid[i][j], j * 100, i * 100);
 
+    // Hiển thị điểm số
     SDL_Color color = { 119, 110, 101 };
     string scoreText = "Score: " + to_string(score);
     SDL_Surface* surface = TTF_RenderText_Blended(font, scoreText.c_str(), color);
@@ -80,6 +84,7 @@ void Board::drawTile(int val, int x, int y) {
     }
 }
 
+// move left
 bool Board::moveLeft() {
     bool moved = false;
     for (int i = 0; i < 4; ++i) {
@@ -105,6 +110,7 @@ bool Board::moveLeft() {
     return moved;
 }
 
+// move right
 bool Board::moveRight() {
     bool moved = false;
     for (int i = 0; i < 4; ++i) {
@@ -130,6 +136,7 @@ bool Board::moveRight() {
     return moved;
 }
 
+// move up
 bool Board::moveUp() {
     bool moved = false;
     for (int j = 0; j < 4; ++j) {
@@ -155,6 +162,7 @@ bool Board::moveUp() {
     return moved;
 }
 
+// move down
 bool Board::moveDown() {
     bool moved = false;
     for (int j = 0; j < 4; ++j) {
@@ -180,12 +188,15 @@ bool Board::moveDown() {
     return moved;
 }
 
+// check còn di chuyển dc ko
 bool Board::canMove() {
+    // nếu còn ô trống
     for (int i = 0; i < 4; ++i)
         for (int j = 0; j < 4; ++j)
             if (grid[i][j] == 0)
                 return true;
 
+    // nếu có ô giống nhau theo hàng/cột
     for (int i = 0; i < 4; ++i)
         for (int j = 0; j < 3; ++j)
             if (grid[i][j] == grid[i][j + 1] || grid[j][i] == grid[j + 1][i])
@@ -195,7 +206,7 @@ bool Board::canMove() {
 }
 
 void Board::reset() {
-    memset(grid, 0, sizeof(grid));
+    memset(grid, 0, sizeof(grid)); // Xóa hết dữ liệu trên bảng
     score = 0;
     spawnTile();
     spawnTile();

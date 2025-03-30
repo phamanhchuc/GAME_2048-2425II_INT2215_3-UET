@@ -11,7 +11,7 @@ public:
     Board();
     Board(Texture* tiles, TTF_Font* font, SDL_Renderer* renderer, Mix_Chunk* moveSound);
 
-    void handleInput(SDL_Keycode key);
+    void handleInput(SDL_Keycode key); // Xử lý thao tác di chuyển của user
     void render();
     void cleanUp();
     void reset();            
@@ -26,12 +26,12 @@ public:
     SDL_Renderer* renderer;
     Mix_Chunk* moveSound;
 
-    void spawnTile();
+    void spawnTile(); // Sinh ô số mới sau mỗi lượt đi.
     bool moveLeft();
     bool moveRight();
     bool moveUp();
     bool moveDown();
-    bool canMove();
+    bool canMove(); //  Kiểm tra xem còn nước đi hợp lệ không.
     void drawTile(int val, int x, int y);
 };
 

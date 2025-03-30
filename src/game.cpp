@@ -14,15 +14,19 @@ bool Game::init() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) return false;
     if (TTF_Init() == -1) return false;
 
+    // Tạo cửa sổ trò chơi
     window = SDL_CreateWindow("2048", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 450, SDL_WINDOW_SHOWN);
     if (!window) return false;
 
+    // Tạo renderer để vẽ đồ họa
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) return false;
 
+    // Load font 
     font = TTF_OpenFont("assets/Boldonse-Regular.ttf", 24);
     if (!font) return false;
 
+     // Khởi tạo âm thanh
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     moveSound = Mix_LoadWAV("assets/music/music.wav");
     winSound = Mix_LoadWAV("assets/music/winmusic.wav");
@@ -35,7 +39,10 @@ bool Game::init() {
         tileTextures[i].loadFromFile(path, renderer);
     }
 
+    // Khởi tạo bàn cờ
     board = Board(tileTextures, font, renderer, moveSound);
+
+    // Load background
     bgTexture.loadFromFile("/Users/stonyyquynh/Desktop/2048 Game/assets/image/background.png", renderer);
     if (!bgTexture.loadFromFile("assets/image/background.png", renderer)) {
         cout << "Failed to load background texture!" << endl;

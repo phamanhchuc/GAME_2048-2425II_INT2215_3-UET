@@ -6,6 +6,7 @@ Texture::~Texture() {
     free();
 }
 
+// Load texture từ file ảnh
 bool Texture::loadFromFile(const std::string& path, SDL_Renderer* renderer) {
     free();
     this->renderer = renderer;
@@ -21,6 +22,7 @@ bool Texture::loadFromFile(const std::string& path, SDL_Renderer* renderer) {
     return texture != nullptr;
 }
 
+// // Load texture từ văn bản
 bool Texture::loadFromText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color) {
     free();
     this->renderer = renderer;
