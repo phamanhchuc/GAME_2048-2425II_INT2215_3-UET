@@ -2,6 +2,8 @@
 
 Bài tập lớn LTNC năm học 2024-2025
 
+Link video Demo: https://drive.google.com/file/d/1iw9l9-EW2I0EZBRGZ2IEJ_GhN7FCqakx/view?usp=drive_link
+
 GIỚI THIỆU CHUNG: 
 Game được lấy cảm hứng từ Game 2048 và được viết bằng ngôn ngữ C++ và sử dụng thư viện SDL2.
 
