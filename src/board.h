@@ -14,12 +14,12 @@ public:
     void handleInput(SDL_Keycode key);
     void render();
     void cleanUp();
-    void reset();            // 🆕 Hàm reset game
-    int getScore() const;    // 🆕 Hàm lấy điểm hiện tại
+    void reset();            
+    int getScore() const;   
 
 public:
     int grid[4][4];
-    int score;               // 🆕 Biến lưu điểm số
+    int score;               
 
     Texture* tileTextures;
     TTF_Font* font;

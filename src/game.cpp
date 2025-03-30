@@ -14,7 +14,7 @@ bool Game::init() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) return false;
     if (TTF_Init() == -1) return false;
 
-    window = SDL_CreateWindow("2048", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 400, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("2048", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 450, SDL_WINDOW_SHOWN);
     if (!window) return false;
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -36,6 +36,12 @@ bool Game::init() {
     }
 
     board = Board(tileTextures, font, renderer, moveSound);
+    bgTexture.loadFromFile("/Users/stonyyquynh/Desktop/2048 Game/assets/image/background.png", renderer);
+    if (!bgTexture.loadFromFile("assets/image/background.png", renderer)) {
+        cout << "Failed to load background texture!" << endl;
+        return false;
+    }
+    
     return true;
 }
 
@@ -94,6 +100,10 @@ void Game::render() {
     SDL_SetRenderDrawColor(renderer, 250, 248, 239, 255);
     SDL_RenderClear(renderer);
 
+    // Hiển thị background
+    SDL_Rect fullScreen = {0, 0, 400, 450};  // Điều chỉnh kích thước nếu cần
+    SDL_RenderCopy(renderer, bgTexture.getTexture(), nullptr, &fullScreen);
+
     board.render();
 
     if (state == WON) {
@@ -104,6 +114,7 @@ void Game::render() {
 
     SDL_RenderPresent(renderer);
 }
+
 
 void Game::renderEndMessage(const string& msg) {
     SDL_Color color = { 119, 110, 101 };
@@ -125,6 +136,9 @@ void Game::close() {
     board.cleanUp();
 
     for (int i = 0; i < 12; ++i) tileTextures[i].free();
+    
+    bgTexture.free();  // Giải phóng background
+
     if (moveSound) Mix_FreeChunk(moveSound);
     if (winSound) Mix_FreeChunk(winSound);
     if (loseSound) Mix_FreeChunk(loseSound);

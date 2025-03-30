@@ -45,20 +45,19 @@ void Board::handleInput(SDL_Keycode key) {
 }
 
 void Board::render() {
-    SDL_SetRenderDrawColor(renderer, 250, 248, 239, 255); // nền
+    SDL_SetRenderDrawColor(renderer, 250, 248, 239, 255); 
     SDL_RenderClear(renderer);
 
     for (int i = 0; i < 4; ++i)
         for (int j = 0; j < 4; ++j)
             drawTile(grid[i][j], j * 100, i * 100);
 
-    // Vẽ điểm
     SDL_Color color = { 119, 110, 101 };
     string scoreText = "Score: " + to_string(score);
     SDL_Surface* surface = TTF_RenderText_Blended(font, scoreText.c_str(), color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
-    SDL_Rect dst = { 10, 410, surface->w, surface->h }; // cần đảm bảo cửa sổ cao > 400
+    SDL_Rect dst = { 10, 410, surface->w, surface->h }; 
     SDL_RenderCopy(renderer, texture, NULL, &dst);
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);

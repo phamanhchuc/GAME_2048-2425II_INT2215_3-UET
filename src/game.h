@@ -40,6 +40,7 @@ private:
     Mix_Chunk* loseSound;
 
     Texture tileTextures[12];
+    Texture bgTexture; 
     Board board;
 
     bool quit;

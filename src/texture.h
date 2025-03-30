@@ -11,8 +11,8 @@ public:
     Texture();
     ~Texture();
 
-    bool loadFromFile(const std::string& path, SDL_Renderer* renderer); // Cách 2
-    bool loadFromText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color); // 👉 Thêm cái này
+    bool loadFromFile(const std::string& path, SDL_Renderer* renderer); 
+    bool loadFromText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color); 
 
     void render(int x, int y);
     void free();
@@ -20,6 +20,8 @@ public:
 
     int getWidth() const { return width; }
     int getHeight() const { return height; }
+
+    SDL_Texture* getTexture() const { return texture; }
 
 private:
     SDL_Texture* texture;

@@ -10,6 +10,6 @@ int main(int argc, char* args[]) {
         return -1;
     }
 
-    game.run(); // close() sẽ tự gọi trong destructor ~Game()
+    game.run(); 
     return 0;
 }
