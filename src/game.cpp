@@ -110,7 +110,7 @@ void Game::render() {
     SDL_RenderClear(renderer);
 
     // Hiển thị background
-    SDL_Rect fullScreen = {0, 0, 400, 450};  // Điều chỉnh kích thước nếu cần
+    SDL_Rect fullScreen = {0, 0, 400, 450}; 
     SDL_RenderCopy(renderer, bgTexture.getTexture(), nullptr, &fullScreen);
 
     board.render();
@@ -126,12 +126,16 @@ void Game::render() {
 
 
 void Game::renderEndMessage(const string& msg) {
-    SDL_Color color = { 119, 110, 101 };
+    SDL_SetRenderDrawColor(renderer, 250, 248, 239, 255);  
+    SDL_Rect background = { 20, 150, 360, 100 };  
+    SDL_RenderFillRect(renderer, &background);  
+
+    SDL_Color color = { 119, 110, 101 };  
     Texture text;
     text.loadFromText(renderer, font, msg, color);
 
-    int x = (400 - text.getWidth()) / 2;
-    int y = 170;
+    int x = (400 - text.getWidth()) / 2;  
+    int y = 170;  
 
     text.render(x, y);
 }
@@ -146,7 +150,7 @@ void Game::close() {
 
     for (int i = 0; i < 12; ++i) tileTextures[i].free();
     
-    bgTexture.free();  // Giải phóng background
+    bgTexture.free(); 
 
     if (moveSound) Mix_FreeChunk(moveSound);
     if (winSound) Mix_FreeChunk(winSound);
