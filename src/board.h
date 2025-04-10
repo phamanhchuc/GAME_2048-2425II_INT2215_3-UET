@@ -14,12 +14,16 @@ public:
     void handleInput(SDL_Keycode key); // Xử lý thao tác di chuyển của user
     void render();
     void cleanUp();
-    void reset();            
+    void reset();       
+    void loadHighScore();    // Đọc từ file
+    void saveHighScore();    // Ghi vào file 
+    int getHighScore() const;    
     int getScore() const;   
 
 public:
     int grid[4][4];
-    int score;               
+    int score;   
+    int highScore;            
 
     Texture* tileTextures;
     TTF_Font* font;

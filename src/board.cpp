@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iostream>
 #include <cstring>
+#include <fstream>
 
 using namespace std;
 
@@ -11,6 +12,8 @@ Board::Board() {}
 Board::Board(Texture* tiles, TTF_Font* font, SDL_Renderer* renderer, Mix_Chunk* moveSound)
     : grid{{0}}, score(0), tileTextures(tiles), font(font), renderer(renderer), moveSound(moveSound) {
     srand(static_cast<unsigned>(time(nullptr)));
+    highScore = 0;
+    loadHighScore();
     spawnTile();
     spawnTile();
 }
@@ -65,6 +68,15 @@ void Board::render() {
     SDL_RenderCopy(renderer, texture, NULL, &dst);
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
+
+    string highScoreText = "High Score: " + to_string(highScore);
+    surface = TTF_RenderText_Blended(font, highScoreText.c_str(), color);
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+    SDL_Rect dstHighScore = { 10, 460, surface->w, surface->h };  // Di chuyển xuống dưới
+    SDL_RenderCopy(renderer, texture, NULL, &dstHighScore);
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
 }
 
 void Board::drawTile(int val, int x, int y) {
@@ -101,6 +113,10 @@ bool Board::moveLeft() {
             if (k > 0 && grid[i][k - 1] == grid[i][k] && lastMerge != k - 1) {
                 grid[i][k - 1] *= 2;
                 score += grid[i][k - 1];
+                if (score > highScore) {
+                    highScore = score;
+                    saveHighScore();
+                }                
                 grid[i][k] = 0;
                 lastMerge = k - 1;
                 moved = true;
@@ -127,6 +143,10 @@ bool Board::moveRight() {
             if (k < 3 && grid[i][k + 1] == grid[i][k] && lastMerge != k + 1) {
                 grid[i][k + 1] *= 2;
                 score += grid[i][k + 1];
+                if (score > highScore) {
+                    highScore = score;
+                    saveHighScore();
+                }                
                 grid[i][k] = 0;
                 lastMerge = k + 1;
                 moved = true;
@@ -153,6 +173,10 @@ bool Board::moveUp() {
             if (k > 0 && grid[k - 1][j] == grid[k][j] && lastMerge != k - 1) {
                 grid[k - 1][j] *= 2;
                 score += grid[k - 1][j];
+                if (score > highScore) {
+                    highScore = score;
+                    saveHighScore();
+                }                
                 grid[k][j] = 0;
                 lastMerge = k - 1;
                 moved = true;
@@ -179,6 +203,10 @@ bool Board::moveDown() {
             if (k < 3 && grid[k + 1][j] == grid[k][j] && lastMerge != k + 1) {
                 grid[k + 1][j] *= 2;
                 score += grid[k + 1][j];
+                if (score > highScore) {
+                    highScore = score;
+                    saveHighScore();
+                }                
                 grid[k][j] = 0;
                 lastMerge = k + 1;
                 moved = true;
@@ -203,6 +231,28 @@ bool Board::canMove() {
                 return true;
 
     return false;
+}
+
+void Board::loadHighScore() {
+    ifstream file("highscore.txt");
+    if (file.is_open()) {
+        file >> highScore;
+        file.close();
+    } else {
+        highScore = 0;
+    }
+}
+
+void Board::saveHighScore() {
+    ofstream file("highscore.txt");
+    if (file.is_open()) {
+        file << highScore;
+        file.close();
+    }
+}
+
+int Board::getHighScore() const {
+    return highScore;
 }
 
 void Board::reset() {

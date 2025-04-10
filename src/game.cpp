@@ -10,12 +10,13 @@ Game::Game()
 
 Game::~Game() { close(); }
 
+// Khởi tạo game
 bool Game::init() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) return false;
     if (TTF_Init() == -1) return false;
 
     // Tạo cửa sổ trò chơi
-    window = SDL_CreateWindow("2048", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 450, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("2048", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 510, SDL_WINDOW_SHOWN);
     if (!window) return false;
 
     // Tạo renderer để vẽ đồ họa
@@ -52,6 +53,7 @@ bool Game::init() {
     return true;
 }
 
+// Vòng lặp game
 void Game::run() {
     SDL_Event e;
     while (!quit) {
