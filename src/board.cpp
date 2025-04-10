@@ -70,7 +70,7 @@ void Board::render() {
     SDL_DestroyTexture(texture);
 
     // Hiển thị điểm cao nhất
-    string highScoreText = "High Score: " + to_string(highScore);
+    string highScoreText = "Highest Score: " + to_string(highScore);
     surface = TTF_RenderText_Blended(font, highScoreText.c_str(), color);
     texture = SDL_CreateTextureFromSurface(renderer, surface);
 

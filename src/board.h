@@ -15,8 +15,8 @@ public:
     void render();
     void cleanUp();
     void reset();       
-    void loadHighScore();    // Đọc từ file
-    void saveHighScore();    // Ghi vào file 
+    void loadHighScore();   
+    void saveHighScore();   
     int getHighScore() const;    
     int getScore() const;   
 
